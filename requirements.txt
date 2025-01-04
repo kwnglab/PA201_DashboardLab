@@ -5,3 +5,4 @@ kagglehub
 xlsxwriter
 pandas
 snakemake
+faker
