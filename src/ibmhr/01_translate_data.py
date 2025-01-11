@@ -1,17 +1,12 @@
 import os
 import pandas as pd
 
-# 현재 폴더 경로
-current_path = os.getcwd()
-
-# 상위 폴더 경로
-project_path = os.path.dirname(current_path)
-
 # 경로
 current_path = os.getcwd()
 
 # 상위 폴더 경로
-project_path = os.path.dirname(current_path)
+project_path = os.path.dirname(current_path) + "/PA201_DashboardLab"
+
 
 # 캐글허브에서 IBM HR 데이터 다운로드
 import kagglehub
@@ -23,7 +18,7 @@ print(os.listdir(ibm_path))
 ibmhr = pd.read_csv(ibm_path + "/WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
 ibmhr.rename(columns={
-    'Age': '나이',
+    'Age': '연령',
     'Attrition': '퇴직여부',
     'BusinessTravel': '출장빈도',
     'DailyRate': '일일요금',
@@ -31,8 +26,8 @@ ibmhr.rename(columns={
     'DistanceFromHome': '출퇴근거리',
     'Education': '교육',
     'EducationField': '전공',
-    'EmployeeCount': '직원수',
-    'EmployeeNumber': '직원번호',
+    'EmployeeCount': '사원수',
+    'EmployeeNumber': '사원번호',
     'EnvironmentSatisfaction': '환경만족도',
     'Gender': '성별',
     'HourlyRate': '시간당급여',
@@ -45,19 +40,19 @@ ibmhr.rename(columns={
     'MonthlyRate': '월요금',
     'NumCompaniesWorked': '이직횟수',
     'Over18': '성인여부',
-    'OverTime': '야근여부',
+    'OverTime': 'OT여부',
     'PercentSalaryHike': '급여인상률',
     'PerformanceRating': '성과평가',
     'RelationshipSatisfaction': '관계만족도',
-    'StandardHours': '표준근무시간',
+    'StandardHours': '소정근무시간',
     'StockOptionLevel': '스톡옵션',
-    'TotalWorkingYears': '총근무연수',
+    'TotalWorkingYears': '총경력년수',
     'TrainingTimesLastYear': '지난해훈련횟수',
     'WorkLifeBalance': '일생활균형',
-    'YearsAtCompany': '근속연수',
-    'YearsInCurrentRole': '현직무연수',
-    'YearsSinceLastPromotion': '승진후근무연수',
-    'YearsWithCurrManager': '현매니저근무연수'
+    'YearsAtCompany': '근속년수',
+    'YearsInCurrentRole': '현직무근무년수',
+    'YearsSinceLastPromotion': '현직급근무년수',
+    'YearsWithCurrManager': '현직책근무년수'
 },
     inplace=True)
 
@@ -81,7 +76,7 @@ translation_dict = {
     },
     "결혼여부": {"Single": "미혼", "Married": "기혼", "Divorced": "이혼"},
     "성인여부": {"Y": "예"},
-    "야근여부": {"Yes": "예", "No": "아니오"}
+    "OT여부": {"Yes": "예", "No": "아니오"}
 }
 
 # Apply translations to the ibm_rawset
@@ -96,7 +91,6 @@ ibmhr['부서'] = ibmhr.apply(lambda x: "의료연구팀" if (x['직무'] == "�
 else x['부서'], axis=1)
 ibmhr['부서'] = ibmhr.apply(lambda x: "의료제조팀" if (x['직무'] == "제조 책임자") | (x['직무'] == "실험실 기술자")
 else x['부서'], axis=1)
-print(project_path)
 
-
-ibmhr.to_excel(project_path + "/data/interim/ibm_raw.xlsx")
+# 데이터를 엑셀파일로 변환
+ibmhr.to_excel(project_path + "/data/interim/ibmhr.xlsx", index=False)
