@@ -29,7 +29,8 @@ fake = Faker(locale = 'ko_KR')
 
 fake_list = {
     '성명' : [fake.name() for _ in range(len(ibmhr))],
-    '퇴직일자' : [fake.date_between(start_date = '-10y', end_date = pd.to_datetime('2024-12-31')) for _ in range(len(ibmhr))]
+    '퇴직일자' : [fake.date_between(start_date = '-10y',
+                                end_date = pd.to_datetime('2024-12-31')) for _ in range(len(ibmhr))]
 }
 fake_df = pd.DataFrame(fake_list)
 fake_df['퇴직일자'] = pd.to_datetime(fake_df['퇴직일자'])
