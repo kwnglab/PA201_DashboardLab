@@ -3,14 +3,6 @@ rule all:
         "data/interim/ibmhr_translated.xlsx",
         "data/processed/ibmhr.xlsx"
 
-rule download_data:
-    output:
-        "data/raw/WA_Fn-UseC_-HR-Employee-Attrition.csv"
-    shell:
-        """
-        python src/ibmhr/download_data.py {output}
-        """
-
 rule translate_data:
     input:
         "data/raw/WA_Fn-UseC_-HR-Employee-Attrition.csv"

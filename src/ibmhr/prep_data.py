@@ -1,22 +1,7 @@
 import pandas as pd
 import os
 
-def get_project_path():
-    current_file_path = os.getcwd()  # 현재 파일의 절대 경로
-    path = os.path.dirname(current_file_path)  # 현재 파일의 디렉토리 경로
-
-    # 최상위 폴더로 이동
-    while not os.path.isfile(os.path.join(path, 'README.md')):  # 최상위 폴더에 있는 파일 예: README.md
-        path = os.path.dirname(path)  # 한 단계 상위 디렉토리로 이동
-        if path == '/':
-            break  # 루트 디렉토리에 도달하면 중단
-
-    return path
-
-
-# 프로젝트 경로 가져오기(현재경로의 상위상위폴더)
-project_path = get_project_path()
-ibmhr = pd.read_excel(project_path + "/data/interim/ibmhr_translated.xlsx")
+ibmhr = pd.read_excel("C:/Users/kwng/DataspellProjects/PA201_DashboardLab/data/interim/ibmhr_translated.xlsx")
 
 # 필요한 데이터만 추출
 ibmhr =ibmhr[['연령', '퇴직여부', '본부', '출퇴근거리', '교육', '전공', '사원번호',
@@ -55,4 +40,4 @@ ibmhr['d_근속일수'] = pd.to_timedelta(ibmhr['d_근속일수'], unit='D')
 ibmhr['입사일자'] = ibmhr['퇴직일자'] - ibmhr['d_근속일수']
 
 # 데이터를 엑셀파일로 변환
-ibmhr.to_excel(project_path + "/data/processed/ibmhr.xlsx", index=False)
+ibmhr.to_excel("C:/Users/kwng/DataspellProjects/PA201_DashboardLab/data/processed/ibmhr.xlsx", index=False)
