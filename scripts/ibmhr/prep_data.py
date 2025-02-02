@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 
 ibmhr = pd.read_excel("C:/Users/kwng/DataspellProjects/PA201_DashboardLab/data/interim/ibmhr_translated.xlsx")
 
@@ -9,8 +8,10 @@ ibmhr =ibmhr[['연령', '퇴직여부', '본부', '출퇴근거리', '교육', '
               '총경력년수', '근속년수', '부서']]
 # 한국 급여단위로 환산
 ibmhr = ibmhr.reset_index(drop=True) # 우선 인덱스를 초기화해야함
-ibmhr['d_월급'] = ibmhr['월급'] / 10
+ibmhr['d_월급'] = coibmhr['월급'] / 10
 
+# 이직여부
+ibmhr['퇴직여부cd'] = ibmhr['퇴직여부'].apply(lambda x: 1 if x == "예" else 0)
 
 ## 임의의 데이터 생성
 from faker import Faker
@@ -41,3 +42,5 @@ ibmhr['입사일자'] = ibmhr['퇴직일자'] - ibmhr['d_근속일수']
 
 # 데이터를 엑셀파일로 변환
 ibmhr.to_excel("C:/Users/kwng/DataspellProjects/PA201_DashboardLab/data/processed/ibmhr.xlsx", index=False)
+
+
